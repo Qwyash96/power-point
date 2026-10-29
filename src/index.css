@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Custom scrollbars for presentation panels */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Print Stylesheet for clean slide-by-slide PDF export */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-print,
+  nav,
+  header,
+  aside,
+  footer,
+  .ribbon-toolbar,
+  .thumbnail-sidebar,
+  .inspector-sidebar,
+  .status-bar,
+  .presenter-controls,
+  button:not(.print-allow) {
+    display: none !important;
+  }
+
+  .print-deck-container {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-slide-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    width: 100vw !important;
+    height: 56.25vw !important; /* 16:9 ratio */
+    max-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    margin: 0 0 1rem 0 !important;
+  }
+}
+
+/* Laser pointer glow effect in presenter view */
+.laser-pointer-trail {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #ff0055 0%, rgba(255, 0, 85, 0.8) 40%, rgba(255, 0, 85, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 16px 4px rgba(255, 0, 85, 0.9), 0 0 32px 10px rgba(255, 50, 50, 0.6);
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+/* ==========================================================================
+   SLIDE TRANSITION ENGINE ANIMATIONS (Fade, Slide, Push)
+   ========================================================================== */
+
+@keyframes transitionFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes transitionSlideInForward {
+  0% {
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes transitionSlideInBackward {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes transitionPushInForward {
+  0% {
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes transitionPushOutForward {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes transitionPushInBackward {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes transitionPushOutBackward {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* Animation classes with dynamic CSS variable duration support */
+.transition-fade-enter {
+  animation: transitionFadeIn var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity;
+}
+
+.transition-slide-enter-forward {
+  animation: transitionSlideInForward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.transition-slide-enter-backward {
+  animation: transitionSlideInBackward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.transition-push-enter-forward {
+  animation: transitionPushInForward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.transition-push-exit-forward {
+  animation: transitionPushOutForward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.transition-push-enter-backward {
+  animation: transitionPushInBackward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.transition-push-exit-backward {
+  animation: transitionPushOutBackward var(--transition-duration, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+

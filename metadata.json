@@ -1,0 +1,6 @@
+{
+  "name": "SlideCraft Studio",
+  "description": "Full-featured, free web presentation suite with ribbon toolbar, WYSIWYG slide canvas, starter templates, presenter mode with speaker notes, laser pointer, and PDF/HTML export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
